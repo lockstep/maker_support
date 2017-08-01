@@ -30,9 +30,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  sign_out: 'Sign Out'
+  cancel_pledge: 'Cancel Pledge'
   submit: 'Submit Pledge'
   contribution_update_message: 'Thank you for your pledge!'
+  pledge_cancelled: 'Your pledge has been cancelled.'
   current_contributor_summary:
-    one: 'Join 1 other support:'
+    one: 'Join 1 other supporter:'
     other: 'Join %{count} other supporters:'

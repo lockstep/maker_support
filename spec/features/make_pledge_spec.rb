@@ -11,6 +11,7 @@ feature 'A user signs up to support a maker' do
     complete_registration_form
     click_button I18n.t('submit')
     expect(page).to have_content I18n.t('contribution_update_message')
+    click_link I18n.t('sign_out')
     expect(page).to have_content(
       I18n.t('current_contributor_summary', count: 1)
     )
@@ -25,6 +26,17 @@ feature 'A user signs up to support a maker' do
     complete_registration_form
     click_button I18n.t('submit')
     expect(page).to have_content I18n.t('contribution_update_message')
+  end
+
+  scenario 'user cancels pledge' do
+    visit root_path
+    complete_registration_form
+    click_button I18n.t('submit')
+    click_link I18n.t('cancel_pledge')
+    expect(page).to have_content(
+      I18n.t('current_contributor_summary', count: 0)
+    )
+    expect(page).to have_content I18n.t('pledge_cancelled')
   end
 
   def complete_registration_form(overrides={})

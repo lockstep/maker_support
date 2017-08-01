@@ -14,10 +14,8 @@
     <div class="col">
       <h3>Problem:</h3>
       <p>
-        <%= @maker.first_name %> doesn't support per-podcast contributions.
-        But you like the incentive alignment of per-podcast contributions,
-        and it doesn't seem like too much to ask to give in a way that
-        makes the most sense.
+        <%= @maker.first_name %> doesn't support per-podcast contributions,
+        but you like the incentive alignment of per-podcast contributions.
       </p>
 
       <h3>Solution:</h3>
@@ -25,7 +23,7 @@
         This
         <%= link_to "open source",
           "https://github.com/lockstep/maker_support", target: '_blank' %>
-        mini-app that charges your CC via
+        mini-app charges your CC via
         <%= link_to 'Stripe', 'https://stripe.com/', target: '_blank' %>
         every time
         <%= @maker.first_name %> releases a podcast. It's like Patreon, if
@@ -35,38 +33,53 @@
         Contributions will be mailed to <%= @maker.first_name %> by check.
         Ideally he'll get on board and enter his own Stripe credentials
         so he receives contributions directly, <i>or</i> add this functionality
-        to his website and render this application unnecessary.
+        to his website and render this application completely unnecessary.
       </p>
     </div>
   </div>
   <hr />
   <div class="row py-3">
     <div class="col">
-      <h4>
-        <%= t('current_contributor_summary', count: @maker.pledges.size) %>
-      </h4>
       <div class="row">
         <div class="col-md-6">
-          <%= bootstrap_form_for(
-            User.new, url: registration_path(:user),
-            data: { 'stripe-key' => ENV['STRIPE_KEY'] }) do |f| %>
-            <%= f.email_field :email %>
-            <%= f.password_field :password %>
-            <%= f.password_field :password_confirmation %>
-            <%= f.select :dollars_per_podcast, 1..20 %>
-            <%= f.hidden_field :stripe_source %>
-            <div class="form-row">
-              <label for="card-element">
-                Credit or debit card
-              </label>
-              <div id="card-element">
-                <!-- a Stripe Element will be inserted here. -->
+          <% if user_signed_in? %>
+            <% if Pledge.find_by(maker: @maker, user: current_user) %>
+              <%= link_to t('cancel_pledge'), pledge_path,
+                method: :delete, class: 'btn btn-danger' %>
+            <% end %>
+            <%= link_to t('sign_out'), destroy_user_session_path,
+              :method => :delete, class: 'btn btn-primary' %>
+          <% else %>
+            <h4>
+              <%= t('current_contributor_summary',
+                    count: @maker.pledges.size) %>
+            </h4>
+            <%= bootstrap_form_for(
+              User.new, url: registration_path(:user),
+              data: { 'stripe-key' => ENV['STRIPE_KEY'] }) do |f| %>
+              <%= f.email_field :email %>
+              <%= f.password_field :password %>
+              <%= f.password_field :password_confirmation %>
+              <%= f.select :dollars_per_podcast, 1..20 %>
+              <%= f.hidden_field :stripe_source %>
+              <div class="form-row">
+                <label for="card-element">
+                  Credit or debit card
+                </label>
+                <div id="card-element">
+                  <!-- a Stripe Element will be inserted here. -->
+                </div>
+                <!-- Used to display form errors -->
+                <div id="card-errors" role="alert"></div>
               </div>
-              <!-- Used to display form errors -->
-              <div id="card-errors" role="alert"></div>
-            </div>
+              <br />
+              <%= f.submit t('submit'), class: 'btn btn-primary btn-block' %>
+            <% end %>
             <br />
-            <%= f.submit t('submit'), class: 'btn btn-primary btn-block' %>
+            <p class="text-center small">
+              Already a contributor? Sign in to cancel your pledge
+              <%= link_to "here", new_session_path(:user) %>.
+            </p>
           <% end %>
         </div>
       </div>

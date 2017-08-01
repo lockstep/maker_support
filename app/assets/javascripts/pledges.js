@@ -45,9 +45,12 @@ $(function() {
   // Handle the form submission
   $form.submit(function(e) {
     var $stripeSource = $('#user_stripe_source');
+    var $submitBtn = $form.find('input[type="submit"]');
+    $submitBtn.prop('disabled', true);
     if (!$stripeSource.val()) {
       stripe.createToken(card).then(function(result) {
         if (result.error) {
+          $submitBtn.prop('disabled', false);
           var errorElement = document.getElementById('card-errors');
           errorElement.textContent = result.error.message;
         } else {
