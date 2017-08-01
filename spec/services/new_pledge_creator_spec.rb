@@ -8,6 +8,7 @@ describe NewPledgeCreator do
     end
 
     it 'associates a stripe customer' do
+      @user.dollars_per_podcast = 2
       NewPledgeCreator.perform(@user, @maker)
       pledge = Pledge.first
       expect(pledge.stripe_customer_id).not_to be_nil
