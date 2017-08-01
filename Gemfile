@@ -32,6 +32,8 @@ gem 'turbolinks', '~> 5'
 
 gem 'bootstrap_form'
 
+gem 'stripe'
+
 # Application monitoring
 gem 'newrelic_rpm'
 

@@ -14,6 +14,7 @@ feature 'A user signs up to support a maker' do
     expect(page).to have_content(
       I18n.t('current_contributor_summary', count: 1)
     )
+    expect(Pledge.first.dollars_per_podcast).to eq 2
   end
 
   scenario 'user provides bad email' do
