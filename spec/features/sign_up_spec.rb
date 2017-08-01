@@ -16,8 +16,18 @@ feature 'A user signs up to support a maker' do
     )
   end
 
-  def complete_registration_form
-    fill_in :user_email, with: 'test@example.com'
+  scenario 'user provides bad email' do
+    visit root_path
+    complete_registration_form(email: '')
+    click_button I18n.t('submit')
+    expect(page).to have_content 'be blank'
+    complete_registration_form
+    click_button I18n.t('submit')
+    expect(page).to have_content I18n.t('contribution_update_message')
+  end
+
+  def complete_registration_form(overrides={})
+    fill_in :user_email, with: overrides[:email] || 'test@example.com'
     fill_in :user_password, with: 'password123'
     fill_in :user_password_confirmation, with: 'password123'
     select 2, from: :user_dollars_per_podcast
