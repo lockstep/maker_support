@@ -1,0 +1,72 @@
+<% content_for :page_title, "Support #{@maker.full_name}" %>
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col">
+      <h2 class="text-center">Support <%= @maker.full_name %></h2>
+      <hr />
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>Problem:</h3>
+      <p>
+        <%= @maker.first_name %> doesn't support per-podcast contributions.
+        But you like the incentive alignment of per-podcast contributions,
+        and it doesn't seem like too much to ask to give in a way that
+        makes the most sense.
+      </p>
+
+      <h3>Solution:</h3>
+      <p>
+        This
+        <%= link_to "open source",
+          "https://github.com/lockstep/maker_support" %>
+        mini-app that charges your CC via Stripe every time
+        <%= @maker.first_name %> releases a podcast. It's like Patreon, if
+        Patreon were open source and built in a few hours.
+      </p>
+      <p>
+        Contributions will be mailed to <%= @maker.first_name %> by check.
+        Ideally he'll get on board and either enter his own Stripe credentials
+        so he receives contributions directly, OR add this functionality
+        to his website and render this application unnecessary.
+      </p>
+    </div>
+  </div>
+  <hr />
+  <div class="row py-3">
+    <div class="col">
+      <h4>
+        <%= t('current_contributor_summary', count: @maker.pledges.size) %>
+      </h4>
+      <div class="row">
+        <div class="col-4">
+          <%= bootstrap_form_for(User.new, url: registration_path(:user)) do |f| %>
+            <%= f.email_field :email %>
+            <%= f.password_field :password %>
+            <%= f.password_field :password_confirmation %>
+            <%= f.select :dollars_per_podcast, 1..20 %>
+            <%= f.submit t('submit'), class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row pb-3">
+    <div class="col">
+      <p class="text-center">
+        Pledge distribution and support provided by
+        the good people at
+        <%= link_to "Lockstep", "https://www.locksteplabs.com/" %>
+        until such a time as <%= @maker.first_name %> provides Stripe
+        credentials or renders this app obsolete.
+      </p>
+    </div>
+  </div>
+</div>
+

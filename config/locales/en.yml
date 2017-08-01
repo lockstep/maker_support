@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  submit: 'Pledge Contribution'
+  contribution_update_message: 'Thank you for your pledge!'
+  current_contributor_summary:
+    one: 'Join 1 other support:'
+    other: 'Join %{count} other supporters:'

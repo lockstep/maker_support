@@ -30,6 +30,8 @@ gem 'uglifier', '>= 1.3.0'
 # Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 
+gem 'bootstrap_form'
+
 # Application monitoring
 gem 'newrelic_rpm'
 
