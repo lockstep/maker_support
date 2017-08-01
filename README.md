@@ -3,6 +3,8 @@
 A super-simple Rails app for per-podcast financial contriubtions
 via Stripe.
 
+Contributions are welcome!
+
 ### Base system
 
 * Rails 5.1.0
